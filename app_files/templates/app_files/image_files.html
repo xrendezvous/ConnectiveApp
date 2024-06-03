@@ -1,0 +1,55 @@
+{% extends 'app_main/base.html' %}
+
+{% block files_page %}
+{% load static %}
+
+<section class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Ваші зображення</h2>
+        <em>За підтримки</em>
+        <img src="{% static 'app_files/cloudinary.svg' %}" style="width: 20px; height: 20px;"/>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="{% url 'app_files:upload_files' %}" class="button" style="margin-left: 30px;">
+                <i class="fa-solid fa-file-arrow-up" style="margin-left: 8px;"></i>Завантажте ваш файл
+            </a>
+        </div>
+        <hr/>
+
+
+        <div class="table-wrapper" , style="margin-top: 40px">
+            <table class="alt">
+                <thead>
+                <tr>
+                    <th>Прев'ю</th>
+                    <th>Опис</th>
+                    <th>Назва файлу</th>
+                    <th>Редагувати</th>
+                    <th>Видалити</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in image_list %}
+                <tr>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;"><img style="max-width: 100%; max-height: 100%;display: inline-block;" src="{{ f.filepath.url }} "/></td>
+                        <td style="vertical-align: middle; ">{{ f.file_description }}</td>
+                        <td style="vertical-align: middle; text-align: center;"><a href="{{ f.filepath.url }}">Завантажити</a></td>
+                        <td style="vertical-align: middle; text-align: center;"><a href="{% url 'app_files:edit_description' f.id %}" class="button">Редагувати</a></td>
+                        <td style="vertical-align: middle; text-align: center;"><a href="{% url 'app_files:delete_file' f.id %}" class="button">Видалити</a></td>
+                    </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Немає зображень.</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'app_files:files_page' %}" class="button" style="margin-right: 30px;">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i> Всі файли
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

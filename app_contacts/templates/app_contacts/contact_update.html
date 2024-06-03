@@ -1,0 +1,132 @@
+{% extends 'app_main/base.html' %}
+
+{% block contacts %}
+{% load static %}
+
+
+<section id="five" class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Оновити контакт:</h2>
+        <h3>{{ contact.name }} {{ contact.surname }}</h3>
+
+        <div class="split style1">
+            <section>
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Будь ласка, виправте помилки нижче.
+                </div>
+                {% endif %}
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <span>Оновити ім'я та прізвище:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" name="name" value="{{ form.instance.name }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.name }}</ul>
+
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" name="surname" placeholder="surname"
+                                   value="{{ form.instance.surname }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.surname }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити Email:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" name="email" placeholder="name@email.com"
+                                   value="{{ form.instance.email }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.email }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити номери телефонів:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            телефон<input type="text" class="form-control" placeholder="+380(XX)XXX-XX-XX"
+                                         name="mobile_phone"
+                                         value="{{ form.instance.mobile_phone }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.mobile_phone }}</ul>
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            робочий<input type="text" class="form-control" placeholder="+380(XX)XXX-XX-XX"
+                                       name="work_phone"
+                                       value="{{ form.instance.work_phone }}">
+                            <span>{{ form.errors.work_phone }}</span>
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            домашній<input type="text" class="form-control" name="home_phone"
+                                       value="{{ form.instance.home_phone }}" placeholder="+38(XXX)XXX-XX-XX">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.home_phone }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити день народження:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            {{ form.birthdate }}
+                            <ul style="color: red; font-size: 14pt">{{ form.error.birthdate }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити Facebook посилання</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://facebook.com/"
+                                   name=facebook value="{{ form.instance.facebook }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.facebook }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити Instagram посилання</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://instagram.com/"
+                                   name="instagram" value="{{ form.instance.instagram }}">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.instagram }}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити Tiktok посилання</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://tiktok.com/" name="tiktok"
+                                   value="{{ form.instance.tiktok }}">
+                            <ul style="color: red; font-size: 14pt">{{form.errors.tiktok}}</ul>
+                        </div>
+                    </div>
+                    <span>Оновити адресу</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="Country" name="country"
+                                   value="{{ address.country }}">
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="City" name="city"
+                                   value="{{ address.city }}">
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="Address" name="address"
+                                   value="{{ address.address }}">
+                        </div>
+                    </div>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall" style="margin-top: 1em">
+                            <input id="is_favorite" type="checkbox" name="is_favorite"
+                                   {% if form.instance.is_favorite %}checked{% endif %}>
+                            <label class="form-label" for="is_favorite">Улюблене</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="button" style="margin-top: 1em">Оновити</button>
+                    <a href="{% url 'app_contacts:contact_update' contact.id %}" class="button">Скинути</a>
+                    <a href="{% url 'app_contacts:contact_details' contact.id %}" class="button">Назад</a>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

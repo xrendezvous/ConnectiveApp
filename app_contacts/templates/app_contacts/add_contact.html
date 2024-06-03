@@ -1,0 +1,133 @@
+{% extends 'app_main/base.html' %}
+
+{% block contacts %}
+{% load static %}
+
+<section id="five" class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Додати контакт</h2>
+
+        <a href="/app_contacts" class="button small">до списку контактів</a>
+        <br>
+        <br>
+
+        <div class="split style1">
+            <section>
+                {% if form.errors  %}
+                <div class="alert alert-danger" role="alert">
+                    Будь ласка, виправте помилки нижче.
+                </div>
+                {% endif %}
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <span {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                            {{ message }}
+                        </span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <span style="font-size: 10pt">Поля, позначені «*», є обов'язковими для заповнення</span>
+                <form method="post" action="{% url 'app_contacts:add_contact' %}">
+                    {% csrf_token %}
+                    <span>Введіть Ім'я та Прізвище:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" style="form-class" placeholder="*Ім'я" name="name">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.name }}</ul>
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" style="form-class" placeholder="Прізвище" name="surname">
+                        </div>
+                    </div>
+                    <span>Введіть Email:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" style="form-class" placeholder="name@email.com" name="email">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.email }}</ul>
+                        </div>
+                    </div>
+                    <span>Введіть номера телефону:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                           mobile<input type="text" style="form-class" placeholder="+380(XX)XXX-XX-XX" name="mobile_phone">
+                           <ul style="color: red; font-size: 14pt">{{ form.errors.mobile_phone }}</ul>
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            work<input type="text" style="form-class" placeholder="+380(XX)XXX-XX-XX" name="work_phone">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.work_phone }}</ul>
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            home<input type="text" style="form-class" placeholder="+380(XX)XXX-XX-XX" name="home_phone">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.home_phone }}</ul>
+                        </div>
+                    </div>
+                    <span>Введіть дату народження:</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="dd/mm/YYYY" name="birthdate">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.birthdate }}</ul>
+                        </div>
+                    </div>
+                    <span>Facebook</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://facebook.com/" name="facebook">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.facebook }}</ul>
+                        </div>
+                    </div>
+                    <span>Instagram</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://instagram.com/"
+                                   name="instagram">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.instagram }}</ul>
+                        </div>
+                    </div>
+                    <span>Tiktok</span>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="https://tiktok.com/" name="tiktok">
+                            <ul style="color: red; font-size: 14pt">{{ form.errors.tiktok }}</ul>
+                        </div>
+                    </div>
+
+                    <span>Введіть адресу:</span>
+                    <div class="row gtr-uniform">
+
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="Країна" name="country">
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="Місто" name="city">
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" class="form-control" placeholder="Адреса" name="address">
+                        </div>
+                    </div>
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall" style="margin-top: 1em">
+                            <input id="is_favorite" type="checkbox" name="is_favorite">
+                            <label class="form-label" for="is_favorite">Улюблене</label>
+
+                        </div>
+                    </div>
+
+                    <div class="row gtr-uniform" style="margin-top: 10px">
+                        <div clas="col-6 col-12-xsmall" >
+                            <button class="btn" type="submit">Зберегти</button>
+                        </div>
+                        <div clas="col-6 col-12-xsmall" >
+                            <a href="{% url 'app_contacts:add_contact' %}" class="button">Скинути</a>
+                        </div>
+                        <div clas="col-6 col-12-xsmall" >
+                            <a href="{% url 'app_contacts:contacts' %}" class="button">Назад</a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

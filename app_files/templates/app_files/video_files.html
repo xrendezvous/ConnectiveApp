@@ -1,0 +1,52 @@
+{% extends 'app_main/base.html' %}
+
+{% block files_page %}
+{% load static %}
+
+<section class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Ваші відео</h2>
+        <em>PЗа підтримки</em>
+        <img src="{% static 'app_files/cloudinary.svg' %}" style="width: 20px; height: 20px;"/>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="{% url 'app_files:upload_files' %}" class="button" style="margin-left: 30px;">
+                <i class="fa-solid fa-file-arrow-up" style="margin-left: 8px;"></i>Завантажте ваш файл
+            </a>
+        </div>
+        <hr/>
+
+        <div class="table-wrapper" , style="margin-top: 40px">
+            <table class="alt">
+                <thead>
+                <tr>
+                    <th>Опис</th>
+                    <th>Назва файлу</th>
+                    <th>Редагувати</th>
+                    <th>Видалити</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in video_list %}
+                <tr>
+                    <td>{{ f.file_description }}</td>
+                    <td style="vertical-align: middle; text-align: center;"><a href="{{ f.filepath.url }} " class="button">Завантажити</a></td>
+                    <td><a href="{% url 'app_files:edit_description' f.id %}" class="button">Редагувати</a></td>
+                    <td><a href="{% url 'app_files:delete_file' f.id %}" class="button">Видалити</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Немає відео.</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'app_files:files_page' %}" class="button" style="margin-right: 30px;">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i> Всі файли
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

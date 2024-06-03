@@ -1,0 +1,57 @@
+{% extends 'app_main/base.html' %}
+
+{% block auth %}
+{% load static %}
+
+<section id="signin" class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Вхід</h2>
+        <div class="split style1">
+            <section>
+                {% if form.errors and form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="fields">
+                        <ul style="list-style: none;">
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Ім'я користувача</label>
+                                    {{ form.username }}
+                                    <span>{{ form.errors.username }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Пароль</label>
+                                    {{ form.password }}
+                                    <span>{{ form.errors.password }}</span>
+                                </div>
+                            </li>
+{#                            <li>#}
+{#                                <div class="small text-left">#}
+{#                                    <p></p>#}
+{#                                    <p class="signin">#}
+{#                                        <a href="{% url 'users:password_reset' %}" class="text-center">#}
+{#                                            <i>Забули пароль?</i>#}
+{#                                        </a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                            </li>#}
+                        </ul>
+                    </div>
+                    <ul class="actions">
+                        <li><a href="" class="button submit">Увійти</a></li>
+                    </ul>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'app_main/base.html' %}
+
+{% block auth %}
+{% load static %}
+
+<section id="signout" class="wrapper style1 fade-up">
+    <div class="inner">
+
+        <section class="logout-page-content">
+            <div class="logout-container">
+                <img class="logout-img" src="https://unsplash.it/150/150">
+                <h2> Ви вийшли з аккаунту! </h2>
+                <p>Не готові покинути нас? Увійдіть ще раз <a href="{% url 'users:signin' %}">тут</a></p>
+            </div>
+        </section>
+        <p></p>
+
+    </div>
+</section>
+
+{% endblock %}
+
+
+

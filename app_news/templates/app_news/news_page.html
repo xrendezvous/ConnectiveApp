@@ -1,0 +1,36 @@
+{% extends 'app_main/base.html' %}
+
+{% block news_page %}
+{% load static %}
+
+<section id="news_page" class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2 id="news_category">Новини</h2>
+    </div>
+    <div class="buttons" style="margin-top: 30px;">
+        <button style="margin-right: 200px; margin-left: 100px;" onclick="showNews('Sport')">Спорт</button>
+        <button style="margin-right: 200px;" onclick="showNews('Culture')">Культура</button>
+        <button onclick="showNews('Politics')">Політика</button>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+<script>
+    function showNews(category) {
+        if (category === 'Sport') {
+            window.location.href = "/app_news/sport-news/";
+        } else if (category === 'Politics') {
+            window.location.href = "/app_news/politic-news/";
+        } else if (category === 'Culture') {
+            window.location.href = "/app_news/culture-news/";
+        } else {
+            console.log("Показ " + category + " новин.");
+        }
+    }
+</script>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'app_main/base.html' %}
+
+{% block auth %}
+{% load static %}
+
+<section id="signup" class="wrapper style1 fade-up">
+    <div class="inner">
+        <h2>Зареєструватися</h2>
+        <div class="split style1">
+            <section>
+                {% if form.errors and form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="fields">
+                        <ul style="list-style: none;">
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Ім'я користувача</label>
+                                    {{ form.username }}
+                                    <span>{{ form.errors.username }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Email</label>
+                                    {{ form.email }}
+                                    <span>{{ form.errors.email }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Пароль</label>
+                                    {{ form.password1 }}
+                                    <span>{{ form.errors.password1 }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="field half">
+                                    <p></p>
+                                    <label class="form-label">Підтвердіть пароль</label>
+                                    {{ form.password2 }}
+                                    <span>{{ form.errors.password2 }}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="actions">
+                        <button type="submit" class="button">Надіслати</button>
+                    </ul>
+                    <i>Вже маєте аккаунт? <a href="{% url 'users:signin' %}">Увійти</a></i>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'app_main/base.html' %}
+
+{% block intro %}
+{% load static %}
+
+<section id="intro" class="wrapper style1 fullscreen fade-up">
+    <div class="inner">
+        <h1>Connective</h1>
+        <p>Connective - це веб-застосунок, що дозволяє зберігати контактну інформацію користувачів, нотатки, завантажувати файли в
+            хмарну систему, а також переглядати новини за категоріями. Щоб розпочати користування, будь ласка <a href="{% url 'users:signin' %}">увійдіть</a>
+            або <a href="{% url 'users:signup' %}">зареєструйтеся</a>.
+        </p>
+
+        <div class="grid-container">
+
+            <div class="main-weather">
+                <h2>Прогноз погоди на даний момент</h2>
+                <div class="weather-info">
+                    <div class="weather-current">
+                        <h2>{{weather.city}}</h2>
+                        <h3>Відчувається як {{weather.feelslike_weather}}°C</h3>
+                    </div>
+                    <div class="weather-icon">
+                        <canvas id="clear-day" width="70" height="70"></canvas>
+                        <img src="https://openweathermap.org/img/wn/{{weather.icon}}.png" alt="Image"
+                             width="100px">
+                    </div>
+                    <div class="weather-temps">
+                        <h4>Макс. {{weather.temperature_max}}°</h4>
+                        <h2>{{weather.temperature}}°C</h2>
+                        <h4>Мін. {{weather.temperature_min}}°</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-currency">
+                <h2>Курси обміну валют</h2>
+                <h4>(У відділеннях Приватбанку)</h4>
+                <div class="currency-info">
+                    {% for date, currencies in exchange_rates.items %}
+                    <ul>
+                        {% for currency, rate in currencies.items %}
+                        <li><h3>{{ currency }}: {{ rate.purchase }} / {{ rate.sale }}</h3></li>
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
