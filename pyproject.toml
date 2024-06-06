@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "contactive-app"
+name = "connective-app"
 version = "0.1.0"
 description = ""
 authors = ["Aryna Reutska <radiationkris@gmail.com>"]
