@@ -1,14 +1,25 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
 
 from .forms import RegisterForm
 
 
 class RegisterView(View):
+    """
+    View for user registration.
+    This class-based view handles user registration. It includes methods to display the registration form,
+    validate form input, and process registration requests.
+
+    Attributes:
+    template_name (str): The template name for the registration page.
+    form_class (Form): The form class for user registration.
+
+    Methods:
+    dispatch(request, *args, **kwargs): Overrides the dispatch method to redirect authenticated users.
+    get(request): Handles GET requests to display the registration form.
+    post(request): Handles POST requests to process registration form submissions.
+    """
     template_name = "users/signup.html"
     form_class = RegisterForm
 
@@ -26,18 +37,7 @@ class RegisterView(View):
             form.save()
             username = form.cleaned_data["username"]
             messages.success(
-                request, f"Hello {username}! You account has been created!"
+                request, f"Привіт {username}! Ваш аккаунт був створений!"
             )
             return redirect(to="users:signin")
         return render(request, self.template_name, {"form": form})
-
-
-class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
-    template_name = "users/password_reset.html"
-    email_template_name = "users/password_reset_email.html"
-    html_email_template_name = "users/password_reset_email.html"
-    success_url = reverse_lazy("users:password_reset_done")
-    success_message = (
-        "An email with instructions to reset your password has been sent to %(email)s."
-    )
-    subject_template_name = "users/password_reset_subject.txt"
