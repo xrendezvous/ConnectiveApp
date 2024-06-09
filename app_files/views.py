@@ -198,6 +198,16 @@ def other(request):
 
 @login_required
 def delete_file(request, f_id):
+    """
+    Delete a specified file associated with the current user.
+
+    Args:
+    request (HttpRequest): The request object.
+    f_id (int): The ID of the file to delete.
+
+    Returns:
+    HttpResponse: Redirect to the files page.
+    """
     file = UserFile.objects.filter(pk=f_id, user=request.user)
     try:
         os.unlink(os.path.join(settings.MEDIA_ROOT, str(file.first().filepath)))
@@ -209,11 +219,21 @@ def delete_file(request, f_id):
 
 @login_required
 def edit_description(request, f_id):
+    """
+    Edit the description of a specified file associated with the current user.
+
+    Args:
+    request (HttpRequest): The request object.
+    f_id (int): The ID of the file to edit.
+
+    Returns:
+    HttpResponse: Rendered edit file description page or redirect to the files page.
+    """
     if request.method == "POST":
         file_description = request.POST["file_description"]
         UserFile.objects.filter(pk=f_id, user=request.user).update(file_description=file_description)
         return redirect(to="app_files:files_page")
 
     file = UserFile.objects.filter(pk=f_id, user=request.user).first()
-    ctx = {"title": "CloudyContacts", "file": file, "media": settings.MEDIA_URL}
+    ctx = {"title": "Connective", "file": file, "media": settings.MEDIA_URL}
     return render(request, "app_files/edit_files.html", context=ctx)
