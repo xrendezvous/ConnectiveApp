@@ -11,6 +11,18 @@ env = environ.Env(
 
 
 def main(request):
+    """
+    Display the main page with weather information and currency exchange rates.
+
+    This function fetches weather information based on the user's location and displays it along with
+    currency exchange rates fetched from the PrivatBank API.
+
+    Args:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: Rendered main page with weather information and currency exchange rates.
+    """
     API_WEATHER_KEY = env("API_WEATHER_KEY")
     ABSTRACT_API_KEY = env("ABSTRACT_API_KEY")
 
@@ -24,7 +36,6 @@ def main(request):
         public_ip = response_ip.json()["ip"]
     else:
         public_ip = None
-    # print(public_ip)
 
     if public_ip:
         response_city = requests.get(
@@ -33,8 +44,6 @@ def main(request):
             + "&ip_address="
             + public_ip
         )
-        # print(response_ip.status_code)
-        # print(response_ip.content)
         if response_city.status_code == 200:
             data = response_city.json()
             city_temp = data["city"]
@@ -80,6 +89,3 @@ def main(request):
         {"weather": weather, "exchange_rates": exchange_rates},
     )
 
-
-# def about_application(request):
-#     return render(request, "app_main/about_application.html", context={})
