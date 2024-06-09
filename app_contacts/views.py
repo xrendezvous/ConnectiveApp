@@ -13,6 +13,16 @@ from .models import Contact, Address
 
 @login_required
 def main(request, page=1):
+    """
+    Display the main contacts page with pagination and search functionality.
+
+    Args:
+    request (HttpRequest): The request object.
+    page (int, optional): The page number for pagination. Defaults to 1.
+
+    Returns:
+    HttpResponse: Rendered contacts page.
+    """
     contacts = (
         Contact.objects.filter(user=request.user).all().order_by("name")
         if request.user.is_authenticated
@@ -71,6 +81,15 @@ def main(request, page=1):
 
 @login_required
 def add_contact(request):
+    """
+    Add a new contact with its address.
+
+    Args:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: Rendered add contact page.
+    """
     if request.method == "POST":
         form = ContactForm(request.POST)
         form2 = AddressForm(request.POST)
@@ -103,6 +122,16 @@ def add_contact(request):
 
 @login_required
 def contact_details(request, contact_id):
+    """
+    Display details of a specific contact.
+
+    Args:
+    request (HttpRequest): The request object.
+    contact_id (int): The ID of the contact to display.
+
+    Returns:
+    HttpResponse: Rendered contact details page.
+    """
     a = get_object_or_404(Contact, id=contact_id)
     b = get_object_or_404(Address, contact_id=contact_id)
     return render(
@@ -114,6 +143,16 @@ def contact_details(request, contact_id):
 
 @login_required
 def delete_contact(request, contact_id):
+    """
+    Delete a specific contact.
+
+    Args:
+    request (HttpRequest): The request object.
+    contact_id (int): The ID of the contact to delete.
+
+    Returns:
+    HttpResponse: Redirect to the contacts page.
+    """
     try:
         a = get_object_or_404(Contact, id=contact_id)
         a.delete()
@@ -125,6 +164,16 @@ def delete_contact(request, contact_id):
 
 @login_required
 def contact_update(request, contact_id=None):
+    """
+    Update or add a contact with its address.
+
+    Args:
+    request (HttpRequest): The request object.
+    contact_id (int, optional): The ID of the contact to update. Defaults to None.
+
+    Returns:
+    HttpResponse: Rendered update contact page.
+    """
     a = None
     b = None
 
@@ -153,7 +202,6 @@ def contact_update(request, contact_id=None):
                     request,
                     f"Контакт '{form.cleaned_data['name']} {form.cleaned_data['surname']}' додано",
                 )
-            # return redirect(reverse('app_contacts:contact_update', args=[contact_id]))
             return redirect(to="app_contacts:contact_details", contact_id=contact_id)
     else:
         form = ContactForm(
@@ -169,6 +217,15 @@ def contact_update(request, contact_id=None):
 
 @login_required
 def contact_birthday(request):
+    """
+    Display contacts with birthdays within a specified period.
+
+    Args:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: Rendered contact birthday page.
+    """
     period = request.GET.get("period")
 
     today = datetime.now()
@@ -228,6 +285,15 @@ def contact_birthday(request):
 
 @login_required
 def calendar(request):
+    """
+    Display a calendar with birthday contacts for a specified month and year.
+
+    Args:
+    request (HttpRequest): The request object.
+
+    Returns:
+    HttpResponse: Rendered calendar page.
+    """
     year = request.GET.get('year')
     month = request.GET.get('month')
 
@@ -255,3 +321,4 @@ def calendar(request):
     }
 
     return render(request, 'app_contacts/calendar.html', context=context)
+
