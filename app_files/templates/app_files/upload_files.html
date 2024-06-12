@@ -21,10 +21,9 @@
             <div class="field half">
                 <label class="button">
                     Виберіть файл
-                    <input type="file" name="filepath" style="display: none;">
+                    <input type="file" name="filepath" style="display: none;" onchange="displayFileName(this)">
                 </label>
-                <!--<label class="form-label">File</label>
-                {{ form.filepath }}-->
+                <span id="file-name"></span>
             </div>
             <ul class="actions">
                 <li>
@@ -32,8 +31,14 @@
                 </li>
             </ul>
         </form>
-
     </div>
 </section>
+
+<script>
+    function displayFileName(input) {
+        var fileName = input.files[0].name;
+        document.getElementById('file-name').textContent = fileName;
+    }
+</script>
 
 {% endblock %}
