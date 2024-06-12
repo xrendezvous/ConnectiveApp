@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
                     <th>Опис</th>
-                    <th>Назва файлу</th>
+                    <th>Назва файлу (завантажити)</th>
                     <th>Редагувати</th>
                     <th>Видалити</th>
                 </tr>
@@ -30,7 +30,7 @@
                 {% for f in video_list %}
                 <tr>
                     <td>{{ f.file_description }}</td>
-                    <td style="vertical-align: middle; text-align: center;"><a href="{{ f.filepath.url }} " class="button">Завантажити</a></td>
+                    <td style="vertical-align: middle; text-align: center;"><a href="{{ f.filepath.url }}">{{ f.filename }}</a></td>
                     <td><a href="{% url 'app_files:edit_description' f.id %}" class="button">Редагувати</a></td>
                     <td><a href="{% url 'app_files:delete_file' f.id %}" class="button">Видалити</a></td>
                 </tr>
