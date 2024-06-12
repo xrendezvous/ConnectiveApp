@@ -1,5 +1,6 @@
 from django.forms import ModelForm, CharField, TextInput
 from .models import Tag, Note
+from django.core.exceptions import ValidationError
 
 
 class TagForm(ModelForm):
@@ -8,6 +9,12 @@ class TagForm(ModelForm):
     class Meta:
         model = Tag
         fields = ["name"]
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        if Tag.objects.filter(name=name).exists():
+            raise ValidationError("Тег з такою назвою вже існує.")
+        return name
 
 
 class NoteForm(ModelForm):
