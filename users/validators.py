@@ -17,6 +17,9 @@ def validate_email(value):
     None
     """
     if User.objects.filter(email=value).exists():
-        raise ValidationError(
-            f"Користувач з {value} вже існує.", params={"value": value}
-        )
+        raise ValidationError("Користувач з такою поштою вже існує.")
+
+
+def validate_username(value):
+    if User.objects.filter(username=value).exists():
+        raise ValidationError("Користувач з таким ім'ям вже існує.")
